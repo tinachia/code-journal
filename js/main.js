@@ -19,7 +19,7 @@ function submitForm(event) {
   entry.notes = $form.elements.notes.value;
   entry.entryId = data.nextEntryId++;
   event.preventDefault();
-  data.entries.push(entry);
+  data.entries.unshift(entry);
   $form.reset();
   $updateImg.setAttribute('src', 'images/placeholder-image-square.jpg');
 }
