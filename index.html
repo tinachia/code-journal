@@ -17,9 +17,58 @@
 </head>
 <body>
   <header>
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <h1 class="font-code-journal">Code Journal</h1>
+        </div>
+      </div>
+    </div>
   </header>
-  <main>
-  </main>
+
+
+  <div data-view="entry-form">
+    <main>
+      <div class="container">
+        <form>
+          <div class="row">
+            <div class="column-full">
+              <h1>New Entry</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <img src="images/placeholder-image-square.jpg">
+            </div>
+            <div class="column-half">
+              <div class="row">
+                <div class="column-full">
+                  <p>Title</p>
+                  <input class="width-100" type="text" name="title" size="50" maxlength="200" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="column-full">
+                  <p>Photo URL</p>
+                  <input class="width-100" id="photoURL" type="URL" name="photo" size="50" maxlength="100" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <p>Notes</p>
+              <textarea class="width-100" name="notes" cols="50" rows="6" required></textarea>
+              <div class="text-align-right">
+                <input class="submit-button" type="submit" value="SAVE">
+              </div>
+            </div>
+          </div>
+          <div class="row"></div>
+        </form>
+      </div>
+    </main>
+  </div>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
