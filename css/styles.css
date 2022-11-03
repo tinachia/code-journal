@@ -38,3 +38,9 @@ textarea:focus {
   border-radius: 2px;
   border-style: none;
 }
+
+.entries-button {
+  border: none;
+  background-color: #562b81;
+  color: white;
+}
