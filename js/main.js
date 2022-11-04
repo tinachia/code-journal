@@ -26,50 +26,49 @@ function submitForm(event) {
 
 // DOM Tree
 
-function newEntries(entries) {
+function newEntry(entry) {
   var $list = document.createElement('li');
-  $list.setAttribute('class', 'column-full');
-
-  var $divRow = document.createElement('div');
-  $divRow.setAttribute('div', 'row');
-
-  $list.appendChild($divRow);
+  $list.setAttribute('class', 'row');
 
   var $divColHalf1 = document.createElement('div');
   $divColHalf1.setAttribute('class', 'column-half');
 
-  $divRow.appendChild($divColHalf1);
+  $list.appendChild($divColHalf1);
 
   var $img = document.createElement('img');
-  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $img.setAttribute('src', entry.photo);
   $img.setAttribute('alt', 'placeholder');
 
   $divColHalf1.appendChild($img);
-  $divColHalf1.appendChild($img);
+  // $divColHalf1.appendChild($img);
 
   var $divColHalf2 = document.createElement('div');
   $divColHalf2.setAttribute('class', 'column-half');
 
-  $divRow.appendChild($divColHalf2);
+  $list.appendChild($divColHalf2);
 
   var $title = document.createElement('h2');
   $title.setAttribute('class', 'entry-title');
+
+  $title.textContent = entry.title;
 
   $divColHalf2.appendChild($title);
 
   var $note = document.createElement('p');
   $note.setAttribute('class', 'entry-note');
 
+  $note.textContent = entry.notes;
+
   $divColHalf2.appendChild($note);
 
   return $list;
 }
 
-var addDOMTree = document.querySelector('ul');
-window.addEventListener('DOMContentLoad', loop);
+var $ul = document.querySelector('#entry-list');
+window.addEventListener('DOMContentLoaded', loop);
 
 function loop(event) {
   for (var i = 0; i < data.entries.length; i++) {
-    addDOMTree.appendChild(newEntries(data.entries[i]));
+    $ul.appendChild(newEntry(data.entries[i]));
   }
 }

@@ -19,7 +19,8 @@ h1 {
   font-weight: lighter;
 }
 
-.submit-button {
+.submit-button,
+.new-anchor {
   background-color: rgb(86, 43, 129);
   color: white;
   border: none;
@@ -42,5 +43,9 @@ textarea:focus {
 .entries-button {
   border: none;
   background-color: #562b81;
+  color: white;
+}
+
+a {
   color: white;
 }
