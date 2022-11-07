@@ -2,8 +2,7 @@
   display: none !important;
 }
 
-.container,
-ul {
+.container {
   max-width: 575px;
   margin: 0 auto;
   padding: 0 1.5rem;
@@ -40,4 +39,10 @@ img {
 
 .width-100 {
   width: 100%;
+}
+
+ul,
+a {
+  padding: 0;
+  text-decoration: none;
 }

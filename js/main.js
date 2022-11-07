@@ -72,3 +72,29 @@ function loop(event) {
     $ul.appendChild(newEntry(data.entries[i]));
   }
 }
+// viewswapping
+
+var $formPage = document.querySelectorAll('.form-page');
+var $submitButton = document.querySelector('.submit-button');
+var $entriesPage = document.querySelector('.entries-page');
+
+$submitButton.addEventListener('click', entriesView);
+
+function entriesView(event) {
+  if (data.view === 'entry-form') {
+    data.view = 'entries';
+    $formPage.className = 'form-page hidden';
+    $entriesPage.className = 'entries-page';
+  }
+}
+
+var $newAnchor = document.querySelector('.new-anchor');
+$newAnchor.addEventListener('click', formView);
+
+function formView(event) {
+  if (data.view === 'entries') {
+    data.view = 'entry-form';
+    $formPage.className = 'form-page';
+    $entriesPage.className = 'entries-page hidden';
+  }
+}
