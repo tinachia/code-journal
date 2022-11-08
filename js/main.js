@@ -13,15 +13,18 @@ var $form = document.querySelector('form');
 $form.addEventListener('submit', submitForm);
 
 function submitForm(event) {
+  event.preventDefault();
   var entry = {};
   entry.title = $form.elements.title.value;
   entry.photo = $form.elements.photo.value;
   entry.notes = $form.elements.notes.value;
   entry.entryId = data.nextEntryId++;
-  event.preventDefault();
   data.entries.unshift(entry);
+  $ul.prepend(newEntry(data.entries[0]));
   $form.reset();
   $updateImg.setAttribute('src', 'images/placeholder-image-square.jpg');
+  data.view = 'entries';
+  entriesView();
 }
 
 // DOM Tree
@@ -74,15 +77,14 @@ function loop(event) {
 }
 // viewswapping
 
-var $formPage = document.querySelectorAll('.form-page');
-var $submitButton = document.querySelector('.submit-button');
+var $formPage = document.querySelector('.form-page');
 var $entriesPage = document.querySelector('.entries-page');
 
-$submitButton.addEventListener('click', entriesView);
-
-function entriesView(event) {
+function entriesView() {
   if (data.view === 'entry-form') {
-    data.view = 'entries';
+    $formPage.className = 'form-page';
+    $entriesPage.className = 'entries-page hidden';
+  } else if (data.view === 'entries') {
     $formPage.className = 'form-page hidden';
     $entriesPage.className = 'entries-page';
   }
@@ -91,10 +93,17 @@ function entriesView(event) {
 var $newAnchor = document.querySelector('.new-anchor');
 $newAnchor.addEventListener('click', formView);
 
-function formView(event) {
-  if (data.view === 'entries') {
-    data.view = 'entry-form';
-    $formPage.className = 'form-page';
-    $entriesPage.className = 'entries-page hidden';
-  }
+function formView() {
+  data.view = 'entry-form';
+  entriesView();
 }
+
+var $entriesButton = document.querySelector('.entries-button');
+$entriesButton.addEventListener('click', entryButton);
+
+function entryButton() {
+  data.view = 'entries';
+  entriesView();
+}
+
+entriesView();
