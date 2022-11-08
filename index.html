@@ -20,36 +20,40 @@
     <div class="container">
       <div class="row">
         <div class="column-full">
-          <h1 class="font-code-journal">Code Journal</h1>
+          <div class="row">
+            <h1 class="font-code-journal">Code Journal</h1>
+            <nav>
+              <a class="entries-button" href="#entries">Entries</a>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
   </header>
-
-
-  <div data-view="entry-form">
-    <main>
+  <!-- New entry -->
+  <main>
+    <div class="form-page" data-view="entry-form">
       <div class="container">
         <form>
           <div class="row">
             <div class="column-full">
-              <h1>New Entry</h1>
+              <h1 class="bold">New Entry</h1>
             </div>
           </div>
           <div class="row">
             <div class="column-half">
-              <img src="images/placeholder-image-square.jpg">
+              <img src="images/placeholder-image-square.jpg" alt="placeholder">
             </div>
             <div class="column-half">
               <div class="row">
                 <div class="column-full">
-                  <p>Title</p>
+                  <p class="bold">Title</p>
                   <input class="width-100" type="text" name="title" size="50" maxlength="200" required>
                 </div>
               </div>
               <div class="row">
                 <div class="column-full">
-                  <p>Photo URL</p>
+                  <p class="bold">Photo URL</p>
                   <input class="width-100" id="photoURL" type="URL" name="photo" size="50" maxlength="100" required>
                 </div>
               </div>
@@ -57,18 +61,39 @@
           </div>
           <div class="row">
             <div class="column-full">
-              <p>Notes</p>
+              <p class="bold">Notes</p>
               <textarea class="width-100" name="notes" cols="50" rows="6" required></textarea>
               <div class="text-align-right">
                 <input class="submit-button" type="submit" value="SAVE">
               </div>
             </div>
           </div>
-          <div class="row"></div>
         </form>
       </div>
-    </main>
-  </div>
+    </div>
+    <!-- end of data entries -->
+
+    <!-- view entries -->
+    <div class="entries-page hidden" data-view="entries">
+      <div class="container">
+        <div class="row">
+          <div class="column-half">
+            <h1>Entries</h1>
+          </div>
+          <div class="column-half text-align-right">
+            <a href="#entry-form" class="new-anchor">NEW</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <ul id="entry-list"></ul>
+      </div>
+
+    </div>
+
+  </main>
+
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>

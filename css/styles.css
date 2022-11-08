@@ -6,12 +6,12 @@ header {
 body {
   background-color: #f0f0f0;
   font-family: "Proza Libre", sans-serif;
-  font-weight: bold;
   font-size: 12px;
 }
 
 h1 {
   font-size: 17px;
+  display: inline;
 }
 
 .font-code-journal {
@@ -19,7 +19,8 @@ h1 {
   font-weight: lighter;
 }
 
-.submit-button {
+.submit-button,
+.new-anchor {
   background-color: rgb(86, 43, 129);
   color: white;
   border: none;
@@ -37,4 +38,22 @@ textarea:focus {
   outline: 2px solid #562b81;
   border-radius: 2px;
   border-style: none;
+}
+
+.entries-button {
+  border: none;
+  background-color: #562b81;
+  color: white;
+}
+
+a {
+  color: white;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
 }
