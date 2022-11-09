@@ -4,6 +4,7 @@ var $photoURLInput = document.querySelector('#photoURL');
 var $updateImg = document.querySelector('img');
 $photoURLInput.addEventListener('input', updateURL);
 
+// create entry
 function updateURL(event) {
   var target = event.target.value;
   $updateImg.setAttribute('src', target);
@@ -64,9 +65,15 @@ function newEntry(entry) {
 
   $divColHalf2.appendChild($note);
 
+  var $icon = document.createElement('i');
+  $icon.className = 'fa-solid fa-pencil';
+  $title.appendChild($icon);
+
   return $list;
 }
+// edit button
 
+// view entries
 var $ul = document.querySelector('#entry-list');
 window.addEventListener('DOMContentLoaded', loop);
 
@@ -107,3 +114,5 @@ function entryButton() {
 }
 
 entriesView();
+
+// edit button

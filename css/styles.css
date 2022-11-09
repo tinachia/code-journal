@@ -17,6 +17,7 @@ h1 {
 .font-code-journal {
   font-size: 12px;
   font-weight: lighter;
+  margin: 0;
 }
 
 .submit-button,
@@ -46,6 +47,10 @@ textarea:focus {
   color: white;
 }
 
+.header-spacing {
+  padding: 10px;
+}
+
 a {
   color: white;
 }
@@ -56,4 +61,9 @@ a {
 
 .hidden {
   display: none;
+}
+
+.entry-title {
+  display: flex;
+  justify-content: space-between;
 }
