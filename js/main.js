@@ -6,16 +6,20 @@ var $journalEntry = document.querySelector('form');
 var $title = document.querySelector('.title');
 var $notes = document.querySelector('.notes');
 
-// viewswapping variable definitions
+// viewswapping
 var $form = document.querySelector('.entries');
 var $entriesLink = document.querySelector('.entries-link');
 var $entries = document.querySelector('.new-entries');
 var $new = document.querySelector('.new');
 var $save = document.querySelector('.save');
-// edit variable definitions
+// edit
 var $h2Edit = document.querySelector('.edit');
 var $h2New = document.querySelector('.new-entry');
-// delete variable definitions
+// delete
+var $delete = document.querySelector('.delete');
+var $modal = document.querySelector('.modal');
+var $cancel = document.querySelector('.cancel');
+var $confirm = document.querySelector('.confirm');
 
 // Event listeners
 $photoURL.addEventListener('input', updateImage);
@@ -25,9 +29,12 @@ $save.addEventListener('click', entriesView);
 $entriesLink.addEventListener('click', entriesView);
 $new.addEventListener('click', formView);
 // click target for delete
+$delete.addEventListener('click', formView);
+$cancel.addEventListener('click', handleDelete);
+$confirm.addEventListener('click', handleDelete);
 
 // function definitons
-
+//
 function updateImage(event) {
   $image.src = event.target.value;
 }
@@ -138,45 +145,71 @@ function prepend(event) {
 
 function entriesView(event) {
   if (event.target.matches('.entries-link') || event.target.matches('.form')) {
-    $form.className = 'container new-entries';
+    $form.className = 'container new entries';
     $entries.className = 'container entries hidden';
   }
   data.view = 'entries';
 }
-// formview
+
 function formView(event) {
   if (event.target.matches('.new')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
+    $delete.className = 'delete hidden';
     $h2Edit.className = 'edit hidden';
     $h2New.className = 'new-entry';
     // click on new clear all form entries
     $journalEntry.reset();
-    $image.src = 'images/placeholder-image-square.jpg';
+    $image.scr = '/images/placeholder-image-square.jpg';
     data.editing = null;
   } else if (event.target.matches('i')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
     $h2Edit.className = 'edit';
-    $h2New.className = 'new-entry hidden';
+    $h2New.className = 'new-entry';
     // show delete entry modal
   } else if (event.target.matches('.delete')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
+    $delete.className = 'delete';
+    $modal.className = 'modal';
   }
   data.view = 'entry-form';
 }
-// delete function definiton
+
+function handleDelete(event) {
+  $h2Edit.className = 'edit ';
+  $h2New.className = 'new-entry hidden';
+  if (event.target.matches('.cancel')) {
+    $delete.className = 'delete';
+    $modal.className = 'modal hidden';
+  } else if (event.target.matches('.confirm')) {
+    $entries.className = 'container entries hidden';
+    $form.className = 'container new-entries';
+    $modal.className = 'modal hidden';
+
+    var $li = document.querySelector('[data-entry-id]');
+    for (var i = 0; i < $li.length; i++) {
+      if (data.editing === data.entries[i]) {
+        data.entries.splice(i, 1);
+        $li[i].remove();
+      }
+    }
+  }
+  if (data.view === 'entry-form') {
+    data.view = 'entries';
+  }
+}
 
 $entryList.addEventListener('click', edit);
 
-// edit function defintion
 function edit(event) {
   formView(event);
+  $delete.className = 'delete';
   $h2Edit.className = 'edit';
   $h2New.className = 'new-entry hidden';
 
-  var $li = document.querySelectorAll('[data-entry-id]');
+  var $li = document.querySelector('[data-entry-id]');
   var closestId = event.target.closest('[data-entry-id]');
   for (var i = 0; i < $li.length; i++) {
     if (closestId === $li[i]) {
