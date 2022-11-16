@@ -1,37 +1,42 @@
-header {
-  background-color: #562b81;
-  color: white;
-}
-
 body {
   background-color: #f0f0f0;
   font-family: "Proza Libre", sans-serif;
   font-size: 12px;
 }
 
-h1 {
-  font-size: 17px;
+header {
+  background-color: #562b81;
+  color: white;
+  padding: 15px 0;
+}
+
+.header {
+  font-weight: 100;
   display: inline;
 }
 
-.font-code-journal {
-  font-size: 12px;
-  font-weight: lighter;
-  margin: 0;
-}
-
-.submit-button,
-.new-anchor {
-  background-color: rgb(86, 43, 129);
+a {
   color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 5px 10px;
-  margin: 10px auto;
+  text-decoration: none;
 }
 
-.text-align-right {
-  text-align: right;
+.image {
+  width: 100%;
+  height: 300px;
+  border-radius: 2px;
+}
+
+.entries-link {
+  padding-left: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+input,
+textarea {
+  width: 100%;
+  margin-top: 5px 0 15px;
+  padding: 5px 0;
 }
 
 input:focus,
@@ -41,29 +46,50 @@ textarea:focus {
   border-style: none;
 }
 
-.entries-button {
+.save,
+.new {
+  background-color: rgb(86, 43, 129);
+  color: white;
   border: none;
-  background-color: #562b81;
-  color: white;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 10px auto;
 }
 
-.header-spacing {
-  padding: 10px;
-}
-
-a {
-  color: white;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.hidden {
-  display: none;
+ul {
+  padding: 0;
+  text-decoration: none;
 }
 
 .entry-title {
+  margin-top: 0;
+  font-weight: 500;
+  display: inline;
+}
+
+p {
+  line-height: 5px;
+}
+
+.entry {
+  margin-bottom: 25px;
+}
+
+.entries-header {
+  margin-top: 20px;
+}
+
+i {
+  float: right;
+}
+
+/* delete */
+.buttons {
   display: flex;
   justify-content: space-between;
+  margin-top: 40px;
+}
+
+.inline {
+  display: inline;
 }
