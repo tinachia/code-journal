@@ -55,9 +55,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="column-full notes">
+          <div class="column-full">
             <label for="notes">Notes</label>
-            <textarea required id="notes" class="notes" cols="50" rows="6" ></textarea>
+            <textarea class="width-100" name="notes" cols="50" rows="6" required></textarea>
             <button class="delete hidden">Delete Entry</button>
             <button class="save">SAVE</button>
           </div>
@@ -67,9 +67,11 @@
     <!--Data view container viewing already made entries  -->
     <div data-view="entries" class="container entries hidden">
       <div class="row">
-        <div class="column-full entries-header">
+        <div class="column-half entries-header">
           <h2 class="inline">Entries</h2>
-          <a href="#" class="new">NEW</a>
+        </div>
+        <div class="column-half entries-header">
+          <a href="#" class="newb">NEW</a>
         </div>
       </div>
       <ul></ul>

@@ -10,16 +10,16 @@ var $notes = document.querySelector('.notes');
 var $form = document.querySelector('.entries');
 var $entriesLink = document.querySelector('.entries-link');
 var $entries = document.querySelector('.new-entries');
-var $new = document.querySelector('.new');
+var $new = document.querySelector('.newb');
 var $save = document.querySelector('.save');
 // edit
 var $h2Edit = document.querySelector('.edit');
 var $h2New = document.querySelector('.new-entry');
 // delete
-var $delete = document.querySelector('.delete');
-var $modal = document.querySelector('.modal');
-var $cancel = document.querySelector('.cancel');
-var $confirm = document.querySelector('.confirm');
+// var $delete = document.querySelector('.delete');
+// var $modal = document.querySelector('.modal');
+// var $cancel = document.querySelector('.cancel');
+// var $confirm = document.querySelector('.confirm');
 
 // Event listeners
 $photoURL.addEventListener('input', updateImage);
@@ -29,9 +29,9 @@ $save.addEventListener('click', entriesView);
 $entriesLink.addEventListener('click', entriesView);
 $new.addEventListener('click', formView);
 // click target for delete
-$delete.addEventListener('click', formView);
-$cancel.addEventListener('click', handleDelete);
-$confirm.addEventListener('click', handleDelete);
+// $delete.addEventListener('click', formView);
+// $cancel.addEventListener('click', handleDelete);
+// $confirm.addEventListener('click', handleDelete);
 
 // function definitons
 //
@@ -86,11 +86,10 @@ function renderEntry(entry) {
   $list.appendChild($divColHalf1);
 
   var $img = document.createElement('img');
-  $img.setAttribute('src', entry.photo);
+  $img.setAttribute('src', entry.image);
   $img.setAttribute('alt', 'placeholder');
 
   $divColHalf1.appendChild($img);
-  // $divColHalf1.appendChild($img);
 
   var $divColHalf2 = document.createElement('div');
   $divColHalf2.setAttribute('class', 'column-half');
@@ -152,10 +151,10 @@ function entriesView(event) {
 }
 
 function formView(event) {
-  if (event.target.matches('.new')) {
+  if (event.target.matches('.newb')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
-    $delete.className = 'delete hidden';
+    // $delete.className = 'delete hidden';
     $h2Edit.className = 'edit hidden';
     $h2New.className = 'new-entry';
     // click on new clear all form entries
@@ -171,50 +170,49 @@ function formView(event) {
   } else if (event.target.matches('.delete')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
-    $delete.className = 'delete';
-    $modal.className = 'modal';
+    // $delete.className = 'delete';
+    // $modal.className = 'modal';
   }
   data.view = 'entry-form';
 }
 
-function handleDelete(event) {
-  $h2Edit.className = 'edit ';
-  $h2New.className = 'new-entry hidden';
-  if (event.target.matches('.cancel')) {
-    $delete.className = 'delete';
-    $modal.className = 'modal hidden';
-  } else if (event.target.matches('.confirm')) {
-    $entries.className = 'container entries hidden';
-    $form.className = 'container new-entries';
-    $modal.className = 'modal hidden';
+// function handleDelete(event) {
+//   $h2Edit.className = 'edit ';
+//   $h2New.className = 'new-entry hidden';
+//   if (event.target.matches('.cancel')) {
+//     // $delete.className = 'delete';
+//     // $modal.className = 'modal hidden';
+//   } else if (event.target.matches('.confirm')) {
+//     $entries.className = 'container entries hidden';
+//     $form.className = 'container new-entries';
+//     // $modal.className = 'modal hidden';
 
-    var $li = document.querySelector('[data-entry-id]');
-    for (var i = 0; i < $li.length; i++) {
-      if (data.editing === data.entries[i]) {
-        data.entries.splice(i, 1);
-        $li[i].remove();
-      }
-    }
-  }
-  if (data.view === 'entry-form') {
-    data.view = 'entries';
-  }
-}
+//     var $li = document.querySelector('[data-entry-id]');
+//     for (var i = 0; i < $li.length; i++) {
+//       if (data.editing === data.entries[i]) {
+//         data.entries.splice(i, 1);
+//         $li[i].remove();
+//       }
+//     }
+//   }
+//   if (data.view === 'entry-form') {
+//     data.view = 'entries';
+//   }
+// }
 
 $entryList.addEventListener('click', edit);
 
 function edit(event) {
   formView(event);
-  $delete.className = 'delete';
+  // $delete.className = 'delete';
   $h2Edit.className = 'edit';
   $h2New.className = 'new-entry hidden';
 
-  var $li = document.querySelector('[data-entry-id]');
-  var closestId = event.target.closest('[data-entry-id]');
+  var $li = document.querySelectorAll('data-entry-id');
+  var closestId = event.target.closest('data-entry-id');
   for (var i = 0; i < $li.length; i++) {
     if (closestId === $li[i]) {
       data.editing = data.entries[i];
-
       $photoURL.value = data.entries[i].image;
       $title.value = data.entries[i].title;
       $notes.value = data.entries[i].notes;
