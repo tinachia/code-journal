@@ -41,8 +41,8 @@ function updateImage(event) {
 
 function newEntry(event) {
   event.preventDefault();
-  var $title = document.querySelector('.title');
-  var $notes = document.querySelector('.notes');
+  // var $title = document.querySelector('.title');
+  // var $notes = document.querySelector('.notes');
   var newObject = {
     title: $title.value,
     image: $photoURL.value,
@@ -79,6 +79,8 @@ function newEntry(event) {
 function renderEntry(entry) {
   var $list = document.createElement('li');
   $list.setAttribute('class', 'row');
+
+  $list.setAttribute('data-entry-id', entry.id);
 
   var $divColHalf1 = document.createElement('div');
   $divColHalf1.setAttribute('class', 'column-half');
@@ -208,10 +210,11 @@ function edit(event) {
   $h2Edit.className = 'edit';
   $h2New.className = 'new-entry hidden';
 
-  var $li = document.querySelectorAll('data-entry-id');
-  var closestId = event.target.closest('data-entry-id');
-  for (var i = 0; i < $li.length; i++) {
-    if (closestId === $li[i]) {
+  // var $li = document.querySelectorAll('data-entry-id');
+  var closestId = event.target.closest('li').getAttribute('data-entry-id');
+  var parseNum = parseInt(closestId);
+  for (var i = 0; i < data.entries.length; i++) {
+    if (parseNum === data.entries[i].id) {
       data.editing = data.entries[i];
       $photoURL.value = data.entries[i].image;
       $title.value = data.entries[i].title;
