@@ -1,37 +1,85 @@
 /* global data */
+// variable definitions
+var $image = document.querySelector('.image');
+var $photoURL = document.querySelector('.photo-url');
+var $journalEntry = document.querySelector('form');
+var $title = document.querySelector('.title');
+var $notes = document.querySelector('.notes');
 
-var $photoURLInput = document.querySelector('#photoURL');
-var $updateImg = document.querySelector('img');
-$photoURLInput.addEventListener('input', updateURL);
+// viewswapping
+var $form = document.querySelector('.entries');
+var $entriesLink = document.querySelector('.entries-link');
+var $entries = document.querySelector('.new-entries');
+var $new = document.querySelector('.newb');
+var $save = document.querySelector('.save');
+// edit
+var $h2Edit = document.querySelector('.edit');
+var $h2New = document.querySelector('.new-entry');
+// delete
+// var $delete = document.querySelector('.delete');
+// var $modal = document.querySelector('.modal');
+// var $cancel = document.querySelector('.cancel');
+// var $confirm = document.querySelector('.confirm');
 
-function updateURL(event) {
-  var target = event.target.value;
-  $updateImg.setAttribute('src', target);
+// Event listeners
+$photoURL.addEventListener('input', updateImage);
+$journalEntry.addEventListener('submit', newEntry);
+// click target for editing
+$save.addEventListener('click', entriesView);
+$entriesLink.addEventListener('click', entriesView);
+$new.addEventListener('click', formView);
+// click target for delete
+// $delete.addEventListener('click', formView);
+// $cancel.addEventListener('click', handleDelete);
+// $confirm.addEventListener('click', handleDelete);
+
+// function definitons
+//
+function updateImage(event) {
+  $image.src = event.target.value;
 }
 
-var $form = document.querySelector('form');
-$form.addEventListener('submit', submitForm);
-
-function submitForm(event) {
+function newEntry(event) {
   event.preventDefault();
-  var entry = {};
-  entry.title = $form.elements.title.value;
-  entry.photo = $form.elements.photo.value;
-  entry.notes = $form.elements.notes.value;
-  entry.entryId = data.nextEntryId++;
-  data.entries.unshift(entry);
-  $ul.prepend(newEntry(data.entries[0]));
-  $form.reset();
-  $updateImg.setAttribute('src', 'images/placeholder-image-square.jpg');
-  data.view = 'entries';
-  entriesView();
+  // var $title = document.querySelector('.title');
+  // var $notes = document.querySelector('.notes');
+  var newObject = {
+    title: $title.value,
+    image: $photoURL.value,
+    notes: $notes.value
+  };
+  if (data.editing === null) {
+    data.nextEntryId++;
+    data.entries.unshift(newObject);
+    $image.src = '/images/placeholder-image-square.jpg';
+    $journalEntry.reset();
+    prepend();
+  } else {
+    var $li = document.querySelectorAll('[data-entry-id]');
+    for (var i = 0; i < $li.length; i++) {
+      if (data.editing === data.entries[i]) {
+        data.entries[i].title = $title.value;
+        data.entries[i].image = $photoURL.value;
+        data.entries[i].notes = $notes.value;
+        // update function to add new DOM Tree or replace exisiting one
+        var update = renderEntry(data.entries[i]);
+        $li[i].replaceWith(update);
+      }
+    }
+    if (data.view === 'entries') {
+      $form.className = 'container new-entries';
+      $entries.className = 'container entries hidden';
+    }
+  }
 }
 
 // DOM Tree
 
-function newEntry(entry) {
+function renderEntry(entry) {
   var $list = document.createElement('li');
   $list.setAttribute('class', 'row');
+
+  $list.setAttribute('data-entry-id', entry.id);
 
   var $divColHalf1 = document.createElement('div');
   $divColHalf1.setAttribute('class', 'column-half');
@@ -39,11 +87,10 @@ function newEntry(entry) {
   $list.appendChild($divColHalf1);
 
   var $img = document.createElement('img');
-  $img.setAttribute('src', entry.photo);
+  $img.setAttribute('src', entry.image);
   $img.setAttribute('alt', 'placeholder');
 
   $divColHalf1.appendChild($img);
-  // $divColHalf1.appendChild($img);
 
   var $divColHalf2 = document.createElement('div');
   $divColHalf2.setAttribute('class', 'column-half');
@@ -64,46 +111,114 @@ function newEntry(entry) {
 
   $divColHalf2.appendChild($note);
 
+  var $icon = document.createElement('i');
+  $icon.className = 'fa-solid fa-pencil';
+  $title.appendChild($icon);
+
   return $list;
 }
 
-var $ul = document.querySelector('#entry-list');
-window.addEventListener('DOMContentLoaded', loop);
+var $entryList = document.querySelector('ul');
 
-function loop(event) {
+function renderEvent(event) {
   for (var i = 0; i < data.entries.length; i++) {
-    $ul.appendChild(newEntry(data.entries[i]));
+    $entryList.appendChild(renderEntry(data.entries[i]));
   }
-}
-// viewswapping
-
-var $formPage = document.querySelector('.form-page');
-var $entriesPage = document.querySelector('.entries-page');
-
-function entriesView() {
   if (data.view === 'entry-form') {
-    $formPage.className = 'form-page';
-    $entriesPage.className = 'entries-page hidden';
+    data.view = 'entry-form';
+    $entries.className = 'container entries';
+    $form.className = 'container new-entries hidden';
   } else if (data.view === 'entries') {
-    $formPage.className = 'form-page hidden';
-    $entriesPage.className = 'entries-page';
+    data.view = 'entries';
+    $form.className = 'container new-entries';
+    $entries.className = 'container entries hidden';
   }
 }
 
-var $newAnchor = document.querySelector('.new-anchor');
-$newAnchor.addEventListener('click', formView);
+document.addEventListener('DOMContentLoaded', renderEvent);
 
-function formView() {
-  data.view = 'entry-form';
-  entriesView();
+function prepend(event) {
+  $entryList.prepend(renderEntry(data.entries[0]));
+  $form.className = 'container new-entries';
+  $entries.className = 'container entries hidden';
 }
 
-var $entriesButton = document.querySelector('.entries-button');
-$entriesButton.addEventListener('click', entryButton);
-
-function entryButton() {
+function entriesView(event) {
+  if (event.target.matches('.entries-link') || event.target.matches('.form')) {
+    $form.className = 'container new entries';
+    $entries.className = 'container entries hidden';
+  }
   data.view = 'entries';
-  entriesView();
 }
 
-entriesView();
+function formView(event) {
+  if (event.target.matches('.newb')) {
+    $entries.className = 'container entries';
+    $form.className = 'container new-entries hidden';
+    // $delete.className = 'delete hidden';
+    $h2Edit.className = 'edit hidden';
+    $h2New.className = 'new-entry';
+    // click on new clear all form entries
+    $journalEntry.reset();
+    $image.scr = '/images/placeholder-image-square.jpg';
+    data.editing = null;
+  } else if (event.target.matches('i')) {
+    $entries.className = 'container entries';
+    $form.className = 'container new-entries hidden';
+    $h2Edit.className = 'edit';
+    $h2New.className = 'new-entry';
+    // show delete entry modal
+  } else if (event.target.matches('.delete')) {
+    $entries.className = 'container entries';
+    $form.className = 'container new-entries hidden';
+    // $delete.className = 'delete';
+    // $modal.className = 'modal';
+  }
+  data.view = 'entry-form';
+}
+
+// function handleDelete(event) {
+//   $h2Edit.className = 'edit ';
+//   $h2New.className = 'new-entry hidden';
+//   if (event.target.matches('.cancel')) {
+//     // $delete.className = 'delete';
+//     // $modal.className = 'modal hidden';
+//   } else if (event.target.matches('.confirm')) {
+//     $entries.className = 'container entries hidden';
+//     $form.className = 'container new-entries';
+//     // $modal.className = 'modal hidden';
+
+//     var $li = document.querySelector('[data-entry-id]');
+//     for (var i = 0; i < $li.length; i++) {
+//       if (data.editing === data.entries[i]) {
+//         data.entries.splice(i, 1);
+//         $li[i].remove();
+//       }
+//     }
+//   }
+//   if (data.view === 'entry-form') {
+//     data.view = 'entries';
+//   }
+// }
+
+$entryList.addEventListener('click', edit);
+function edit(event) {
+  formView(event);
+  // $delete.className = 'delete';
+  $h2Edit.className = 'edit';
+  $h2New.className = 'new-entry hidden';
+
+  // var $li = document.querySelectorAll('data-entry-id');
+  var closestId = event.target.closest('li').getAttribute('data-entry-id');
+  var parseNum = parseInt(closestId);
+  for (var i = 0; i < data.entries.length; i++) {
+    if (parseNum === data.entries[i].id) {
+      data.editing = data.entries[i];
+      $photoURL.value = data.entries[i].image;
+      $title.value = data.entries[i].title;
+      $notes.value = data.entries[i].notes;
+      $image.src = data.entries[i].image;
+    }
+    data.entries[i].id = data.editing.id;
+  }
+}

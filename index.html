@@ -16,84 +16,69 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <!-- header containing CodeJournal and Entries -->
   <header>
     <div class="container">
-      <div class="row">
+      <div class="row heading">
         <div class="column-full">
-          <div class="row">
-            <h1 class="font-code-journal">Code Journal</h1>
-            <nav>
-              <a class="entries-button" href="#entries">Entries</a>
-            </nav>
-          </div>
+          <h3 class="header">Code Journal</h3>
+          <a href="#" class="entries-link">Entries</a>
         </div>
       </div>
     </div>
   </header>
-  <!-- New entry -->
-  <main>
-    <div class="form-page" data-view="entry-form">
-      <div class="container">
-        <form>
-          <div class="row">
-            <div class="column-full">
-              <h1 class="bold">New Entry</h1>
-            </div>
-          </div>
-          <div class="row">
-            <div class="column-half">
-              <img src="images/placeholder-image-square.jpg" alt="placeholder">
-            </div>
-            <div class="column-half">
-              <div class="row">
-                <div class="column-full">
-                  <p class="bold">Title</p>
-                  <input class="width-100" type="text" name="title" size="50" maxlength="200" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="column-full">
-                  <p class="bold">Photo URL</p>
-                  <input class="width-100" id="photoURL" type="URL" name="photo" size="50" maxlength="100" required>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="column-full">
-              <p class="bold">Notes</p>
-              <textarea class="width-100" name="notes" cols="50" rows="6" required></textarea>
-              <div class="text-align-right">
-                <input class="submit-button" type="submit" value="SAVE">
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- end of data entries -->
 
-    <!-- view entries -->
-    <div class="entries-page hidden" data-view="entries">
-      <div class="container">
-        <div class="row">
-          <div class="column-half">
-            <h1>Entries</h1>
-          </div>
-          <div class="column-half text-align-right">
-            <a href="#entry-form" class="new-anchor">NEW</a>
-          </div>
+  <main>
+    <!-- Data view container for creating new entry-->
+    <div data-view="entry-form" class="container new-entries">
+      <div class="row">
+        <div class="column-full">
+          <h2 class="new-entry">New Entry</h2>
+          <h2 class="edit hidden">Edit Entry</h2>
         </div>
       </div>
-
-      <div class="container">
-        <ul id="entry-list"></ul>
-      </div>
-
+      <!-- create a form to users to fill out new entry -->
+      <form class="form">
+        <div class="row">
+          <div class="column-full column-half">
+            <img src="/images/placeholder-image-square.jpg" class="image" alt="placeholder-image">
+          </div>
+          <div class="column-full column-half">
+            <label for="title">Title</label>
+            <div>
+              <input type="text" required id="title" class="title" size="50" maxlength="200">
+            </div>
+            <label for="image">Photo URL</label>
+            <div>
+              <input type="text" required id="image" class="photo-url" size="50" maxlength="200">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column-full">
+            <label for="notes">Notes</label>
+            <textarea class="notes" name="notes" cols="50" rows="6" required></textarea>
+            <button class="delete hidden">Delete Entry</button>
+            <button class="save">SAVE</button>
+          </div>
+        </div>
+      </form>
     </div>
+    <!--Data view container viewing already made entries  -->
+    <div data-view="entries" class="container entries hidden">
+      <div class="row">
+        <div class="column-half entries-header">
+          <h2 class="inline">Entries</h2>
+        </div>
+        <div class="column-half entries-header">
+          <a href="#" class="newb">NEW</a>
+        </div>
+      </div>
+      <ul></ul>
+    </div>
+    <!-- modal to delete entries -->
 
   </main>
-
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
