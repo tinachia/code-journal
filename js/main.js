@@ -46,8 +46,7 @@ function newEntry(event) {
   var newObject = {
     title: $title.value,
     image: $photoURL.value,
-    notes: $notes.value,
-    id: data.nextEntryId
+    notes: $notes.value
   };
   if (data.editing === null) {
     data.nextEntryId++;
@@ -203,7 +202,6 @@ function formView(event) {
 // }
 
 $entryList.addEventListener('click', edit);
-
 function edit(event) {
   formView(event);
   // $delete.className = 'delete';
@@ -221,5 +219,6 @@ function edit(event) {
       $notes.value = data.entries[i].notes;
       $image.src = data.entries[i].image;
     }
+    data.entries[i].id = data.editing.id;
   }
 }
