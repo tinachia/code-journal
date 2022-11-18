@@ -15,11 +15,11 @@ var $save = document.querySelector('.save');
 // edit
 var $h2Edit = document.querySelector('.edit');
 var $h2New = document.querySelector('.new-entry');
-// delete
-// var $delete = document.querySelector('.delete');
-// var $modal = document.querySelector('.modal');
-// var $cancel = document.querySelector('.cancel');
-// var $confirm = document.querySelector('.confirm');
+// delete variable definitons
+var $delete = document.querySelector('.delete');
+var $modal = document.querySelector('.modal');
+var $cancel = document.querySelector('.cancel');
+var $confirm = document.querySelector('.confirm');
 
 // Event listeners
 $photoURL.addEventListener('input', updateImage);
@@ -28,10 +28,6 @@ $journalEntry.addEventListener('submit', newEntry);
 $save.addEventListener('click', entriesView);
 $entriesLink.addEventListener('click', entriesView);
 $new.addEventListener('click', formView);
-// click target for delete
-// $delete.addEventListener('click', formView);
-// $cancel.addEventListener('click', handleDelete);
-// $confirm.addEventListener('click', handleDelete);
 
 // function definitons
 //
@@ -41,14 +37,15 @@ function updateImage(event) {
 
 function newEntry(event) {
   event.preventDefault();
-  // var $title = document.querySelector('.title');
-  // var $notes = document.querySelector('.notes');
+  var $title = document.querySelector('.title');
+  var $notes = document.querySelector('.notes');
   var newObject = {
     title: $title.value,
     image: $photoURL.value,
     notes: $notes.value
   };
   if (data.editing === null) {
+    newObject.id = data.nextEntryId;
     data.nextEntryId++;
     data.entries.unshift(newObject);
     $image.src = '/images/placeholder-image-square.jpg';
@@ -155,7 +152,7 @@ function formView(event) {
   if (event.target.matches('.newb')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
-    // $delete.className = 'delete hidden';
+    $delete.className = 'delete hidden';
     $h2Edit.className = 'edit hidden';
     $h2New.className = 'new-entry';
     // click on new clear all form entries
@@ -171,44 +168,19 @@ function formView(event) {
   } else if (event.target.matches('.delete')) {
     $entries.className = 'container entries';
     $form.className = 'container new-entries hidden';
-    // $delete.className = 'delete';
-    // $modal.className = 'modal';
+    $delete.className = 'delete';
+    $modal.className = 'modal';
   }
   data.view = 'entry-form';
 }
 
-// function handleDelete(event) {
-//   $h2Edit.className = 'edit ';
-//   $h2New.className = 'new-entry hidden';
-//   if (event.target.matches('.cancel')) {
-//     // $delete.className = 'delete';
-//     // $modal.className = 'modal hidden';
-//   } else if (event.target.matches('.confirm')) {
-//     $entries.className = 'container entries hidden';
-//     $form.className = 'container new-entries';
-//     // $modal.className = 'modal hidden';
-
-//     var $li = document.querySelector('[data-entry-id]');
-//     for (var i = 0; i < $li.length; i++) {
-//       if (data.editing === data.entries[i]) {
-//         data.entries.splice(i, 1);
-//         $li[i].remove();
-//       }
-//     }
-//   }
-//   if (data.view === 'entry-form') {
-//     data.view = 'entries';
-//   }
-// }
-
+// click target for edit
 $entryList.addEventListener('click', edit);
 function edit(event) {
   formView(event);
-  // $delete.className = 'delete';
+  $delete.className = 'delete';
   $h2Edit.className = 'edit';
   $h2New.className = 'new-entry hidden';
-
-  // var $li = document.querySelectorAll('data-entry-id');
   var closestId = event.target.closest('li').getAttribute('data-entry-id');
   var parseNum = parseInt(closestId);
   for (var i = 0; i < data.entries.length; i++) {
@@ -219,6 +191,37 @@ function edit(event) {
       $notes.value = data.entries[i].notes;
       $image.src = data.entries[i].image;
     }
-    data.entries[i].id = data.editing.id;
+  }
+}
+
+// click target for delete
+$delete.addEventListener('click', formView);
+$cancel.addEventListener('click', handleDelete);
+$confirm.addEventListener('click', handleDelete);
+
+function handleDelete(event) {
+  $h2Edit.className = 'edit ';
+  $h2New.className = 'new-entry hidden';
+  if (event.target.matches('.cancel')) {
+    $delete.className = 'delete';
+    $modal.className = 'modal hidden';
+  } else if (event.target.matches('.confirm')) {
+    $entries.className = 'container entries hidden';
+    $form.className = 'container new-entries';
+    $modal.className = 'modal hidden';
+
+    var $li = document.querySelectorAll('li');
+    // var deleteEntry = event.target.closest('li').getAttribute('data-entry-id');
+    // var parseDelete = parseInt(deleteEntry);
+    for (var i = 0; i < data.entries.length; i++) {
+      if (Number(data.editing.id) === Number(data.entries[i].id)) {
+        data.entries.splice(i, 1);
+        // parseDelete[i].remove();
+        $entryList.removeChild($li[i]);
+      }
+    }
+  }
+  if (data.view === 'entry-form') {
+    data.view = 'entries';
   }
 }
